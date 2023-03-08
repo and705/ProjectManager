@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.stream.Collectors;
@@ -26,30 +27,7 @@ public class ProjectController {
 @Autowired
     TaskServiceImpl taskServiceImpl;
 
-    @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
-    }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER')")
-    public String userAccess() {
-        return "user content.";
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "admin content.";
-    }
-
-    @GetMapping("/auth")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public String authAccess() {
-        return "admin or user content";
-    }
-
-    //============================
     @GetMapping("/getHierarchy")
     @Transactional(readOnly = true)
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
@@ -112,13 +90,12 @@ public class ProjectController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Task updateTaskStatus(@PathVariable long id) {
         Task task = taskServiceImpl.getTask(id);
-        System.out.println("============="+task.getTaskStatus().toString());
         if (task.getTaskStatus().equals("new")){
             task.setTaskStatus("progress");
         } else if (task.getTaskStatus().equals("progress")){
             task.setTaskStatus("done");
         }
-
+        task.setTaskDateOfStatusChange(LocalDateTime.now());
         taskServiceImpl.updateTask(task);
         return task;
     }
