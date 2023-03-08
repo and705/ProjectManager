@@ -22,13 +22,13 @@ public class ProjectController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('Admin')")
-    public String moderatorAccess() {
+    public String adminAccess() {
         return "admin content.";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/auth")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public String adminAccess() {
+    public String authAccess() {
         return "admin or user content";
     }
 }
