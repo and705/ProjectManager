@@ -1,6 +1,7 @@
 package com.nd705.project_manager.controller;
 
 import com.nd705.project_manager.model.Project;
+import com.nd705.project_manager.payload.request.NewProjectRequest;
 import com.nd705.project_manager.repository.ProjectRepository;
 import com.nd705.project_manager.security.service.project.ProjectService;
 import com.nd705.project_manager.security.service.project.ProjectServiceImpl;
@@ -62,8 +63,8 @@ public class ProjectController {
 
     @PostMapping("/projects")
     @PreAuthorize("hasRole('ADMIN')")
-    public Project addNewProject(@RequestBody Project project) {
-        projectServiceImpl.saveProject(project);
+    public Project addNewProject(@RequestBody NewProjectRequest newProjectRequest) {
+        Project project = projectServiceImpl.saveNewProject(newProjectRequest);
         return project;
     }
 

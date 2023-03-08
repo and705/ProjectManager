@@ -2,6 +2,7 @@ package com.nd705.project_manager.model;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,9 +19,9 @@ public class Task {
     @Column(name = "task_status")
     String taskStatus;
     @Column(name = "task_date_of_create")
-    Date taskDateOfCreate;
+    LocalDateTime taskDateOfCreate;
     @Column(name = "task_date_of_status_change")
-    Date taskDateOfStatusChange;
+    LocalDateTime taskDateOfStatusChange;
     @Column(name = "task_info")
     String taskInfo;
     @Column(name = "task_owner")
@@ -71,19 +72,19 @@ public class Task {
         this.taskStatus = taskStatus;
     }
 
-    public Date getTaskDateOfCreate() {
+    public LocalDateTime getTaskDateOfCreate() {
         return taskDateOfCreate;
     }
 
-    public void setTaskDateOfCreate(Date taskDateOfCreate) {
+    public void setTaskDateOfCreate(LocalDateTime taskDateOfCreate) {
         this.taskDateOfCreate = taskDateOfCreate;
     }
 
-    public Date getTaskDateOfStatusChange() {
+    public LocalDateTime getTaskDateOfStatusChange() {
         return taskDateOfStatusChange;
     }
 
-    public void setTaskDateOfStatusChange(Date taskDateOfStatusChange) {
+    public void setTaskDateOfStatusChange(LocalDateTime taskDateOfStatusChange) {
         this.taskDateOfStatusChange = taskDateOfStatusChange;
     }
 
