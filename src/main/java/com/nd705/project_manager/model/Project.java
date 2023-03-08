@@ -31,6 +31,11 @@ public class Project {
     @JsonIgnore
     public Project rootProject;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    @JsonIgnore
+    private List<Task> tasks;
+
+
     @Transient
     public List<Project> childrens = new ArrayList<Project>();
 
@@ -39,6 +44,7 @@ public class Project {
 
     public Project() {
     }
+
 
     public Long getId() {
         return id;
@@ -78,5 +84,13 @@ public class Project {
 
     public void setChildrens(List<Project> childrens) {
         this.childrens = childrens;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

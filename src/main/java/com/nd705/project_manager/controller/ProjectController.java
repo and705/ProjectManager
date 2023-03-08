@@ -1,10 +1,13 @@
 package com.nd705.project_manager.controller;
 
 import com.nd705.project_manager.model.Project;
+import com.nd705.project_manager.model.Task;
 import com.nd705.project_manager.payload.request.NewProjectRequest;
+import com.nd705.project_manager.payload.request.TaskRequest;
 import com.nd705.project_manager.repository.ProjectRepository;
 import com.nd705.project_manager.security.service.project.ProjectService;
 import com.nd705.project_manager.security.service.project.ProjectServiceImpl;
+import com.nd705.project_manager.security.service.project.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +23,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class ProjectController {
 @Autowired ProjectServiceImpl projectServiceImpl;
+@Autowired
+    TaskServiceImpl taskServiceImpl;
 
     @GetMapping("/all")
     public String allAccess() {
@@ -87,4 +92,58 @@ public class ProjectController {
         return "Project with ID = " + id + " was deleted";
     }
 
+
+
+    @PostMapping("/tasks")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Task addNewTask(@RequestBody TaskRequest taskRequest) {
+        Task task = taskServiceImpl.saveNewTask(taskRequest);
+        return task;
+    }
+    @GetMapping("/tasks/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Task getTask(@PathVariable long id) {
+        Task task = taskServiceImpl.getTask(id);
+        return task;
+    }
+
+
+    @GetMapping("/taskUpdateStatus/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Task updateTaskStatus(@PathVariable long id) {
+        Task task = taskServiceImpl.getTask(id);
+        System.out.println("============="+task.getTaskStatus().toString());
+        if (task.getTaskStatus().equals("new")){
+            task.setTaskStatus("progress");
+        } else if (task.getTaskStatus().equals("progress")){
+            task.setTaskStatus("done");
+        }
+
+        taskServiceImpl.updateTask(task);
+        return task;
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public String deleteTask(@PathVariable long id) {
+        return taskServiceImpl.deleteTask(id);
+    }
+
+    @DeleteMapping("/tasksAdmin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteTaskAdmin(@PathVariable long id) {
+        return taskServiceImpl.deleteTaskAdmin(id);
+    }
+    @PutMapping("/tasks")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Task editTask(@RequestBody Task task) {
+        taskServiceImpl.updateTask(task);
+        return task;
+    }
+
+    @GetMapping("/getAllTasks")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Iterable<Task> getAllTask() {
+        return taskServiceImpl.getAllTasks();
+    }
 }

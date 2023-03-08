@@ -1,5 +1,7 @@
 package com.nd705.project_manager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
@@ -9,7 +11,7 @@ import java.util.Date;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "task_name")
@@ -24,21 +26,20 @@ public class Task {
     LocalDateTime taskDateOfStatusChange;
     @Column(name = "task_info")
     String taskInfo;
+
     @Column(name = "task_owner")
     String taskOwner;
     @Column(name = "task_editor")
     String taskEditor;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    @JsonIgnore
+    private Project project;
+
     public Task() {
     }
 
-    public Task(String taskName, String taskType, String taskStatus, String taskInfo, String taskOwner) {
-        this.taskName = taskName;
-        this.taskType = taskType;
-        this.taskStatus = taskStatus;
-        this.taskInfo = taskInfo;
-        this.taskOwner = taskOwner;
-    }
 
     public long getId() {
         return id;
@@ -112,18 +113,13 @@ public class Task {
         this.taskEditor = taskEditor;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", taskName='" + taskName + '\'' +
-                ", taskType='" + taskType + '\'' +
-                ", taskStatus='" + taskStatus + '\'' +
-                ", taskDateOfCreate=" + taskDateOfCreate +
-                ", taskDateOfStatusChange=" + taskDateOfStatusChange +
-                ", taskInfo='" + taskInfo + '\'' +
-                ", taskOwner='" + taskOwner + '\'' +
-                ", taskEditor='" + taskEditor + '\'' +
-                '}';
+    public Project getProject() {
+        return project;
     }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+
 }
