@@ -17,7 +17,7 @@ import com.nd705.project_manager.payload.response.UserInfoResponse;
 import com.nd705.project_manager.repository.RoleRepository;
 import com.nd705.project_manager.repository.UserRepository;
 import com.nd705.project_manager.security.jwt.JwtUtils;
-import com.nd705.project_manager.security.service.UserDetailsImpl;
+import com.nd705.project_manager.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;

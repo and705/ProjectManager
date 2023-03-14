@@ -2,7 +2,7 @@ package com.nd705.project_manager.security.jwt;
 
 import java.io.IOException;
 
-import com.nd705.project_manager.security.service.UserDetailsServiceImpl;
+import com.nd705.project_manager.service.UserDetailsServiceImpl;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

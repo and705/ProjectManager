@@ -1,4 +1,4 @@
-package com.nd705.project_manager.security.service.project;
+package com.nd705.project_manager.service.project;
 
 import com.nd705.project_manager.model.Project;
 import com.nd705.project_manager.model.Task;
@@ -14,4 +14,5 @@ public interface TaskService {
     public Task getTask(long id);
     public String deleteTask(long id);
     public String deleteTaskAdmin(long id);
+    public Task updateTaskStatus(Task task);
 }

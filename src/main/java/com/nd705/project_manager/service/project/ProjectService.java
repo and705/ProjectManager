@@ -1,4 +1,4 @@
-package com.nd705.project_manager.security.service.project;
+package com.nd705.project_manager.service.project;
 
 import com.nd705.project_manager.model.Project;
 import com.nd705.project_manager.payload.request.NewProjectRequest;

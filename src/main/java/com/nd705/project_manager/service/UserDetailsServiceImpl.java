@@ -1,4 +1,4 @@
-package com.nd705.project_manager.security.service;
+package com.nd705.project_manager.service;
 
 import com.nd705.project_manager.model.User;
 import com.nd705.project_manager.repository.UserRepository;

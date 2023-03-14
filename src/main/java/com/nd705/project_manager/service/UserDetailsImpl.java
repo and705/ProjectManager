@@ -1,4 +1,4 @@
-package com.nd705.project_manager.security.service;
+package com.nd705.project_manager.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nd705.project_manager.model.User;

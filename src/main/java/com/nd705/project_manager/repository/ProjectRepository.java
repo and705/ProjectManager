@@ -12,11 +12,11 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project,Long> {
     @Query("SELECT project FROM Project project "
             + " WHERE project.parentProject.id IS NULL")
-    public List<Project> findAllRoots();
+    List<Project> findAllRoots();
 
     @Query("SELECT project FROM Project project"
             + " WHERE project.rootProject.id IN :rootIds ")
-    public List<Project> findAllSubCategoriesInRoot(@Param("rootIds") List<Long> rootIds);
+    List<Project> findAllSubCategoriesInRoot(@Param("rootIds") List<Long> rootIds);
 
 
 }

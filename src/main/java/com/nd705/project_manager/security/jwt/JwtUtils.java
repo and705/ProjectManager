@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.nd705.project_manager.security.service.UserDetailsImpl;
+import com.nd705.project_manager.service.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

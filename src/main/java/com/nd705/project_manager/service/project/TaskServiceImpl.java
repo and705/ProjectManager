@@ -1,7 +1,6 @@
 
-package com.nd705.project_manager.security.service.project;
+package com.nd705.project_manager.service.project;
 
-import com.nd705.project_manager.model.Project;
 import com.nd705.project_manager.model.Task;
 import com.nd705.project_manager.payload.request.TaskRequest;
 import com.nd705.project_manager.repository.ProjectRepository;
@@ -13,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -84,5 +82,17 @@ public class TaskServiceImpl implements TaskService {
     public String deleteTaskAdmin(long id) {
         taskRepository.deleteById(id);
         return "Project with ID = " + id + " was deleted";
+    }
+
+    @Override
+    public Task updateTaskStatus(Task task) {
+        if (task.getTaskStatus().equals("new")){
+            task.setTaskStatus("progress");
+        } else if (task.getTaskStatus().equals("progress")){
+            task.setTaskStatus("done");
+        }
+        task.setTaskDateOfStatusChange(LocalDateTime.now());
+        taskRepository.save(task);
+        return task;
     }
 }

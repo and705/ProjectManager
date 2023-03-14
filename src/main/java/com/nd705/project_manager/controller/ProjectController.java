@@ -4,10 +4,8 @@ import com.nd705.project_manager.model.Project;
 import com.nd705.project_manager.model.Task;
 import com.nd705.project_manager.payload.request.NewProjectRequest;
 import com.nd705.project_manager.payload.request.TaskRequest;
-import com.nd705.project_manager.repository.ProjectRepository;
-import com.nd705.project_manager.security.service.project.ProjectService;
-import com.nd705.project_manager.security.service.project.ProjectServiceImpl;
-import com.nd705.project_manager.security.service.project.TaskServiceImpl;
+import com.nd705.project_manager.service.project.ProjectServiceImpl;
+import com.nd705.project_manager.service.project.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -72,55 +68,5 @@ public class ProjectController {
 
 
 
-    @PostMapping("/tasks")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public Task addNewTask(@RequestBody TaskRequest taskRequest) {
-        Task task = taskServiceImpl.saveNewTask(taskRequest);
-        return task;
-    }
-    @GetMapping("/tasks/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public Task getTask(@PathVariable long id) {
-        Task task = taskServiceImpl.getTask(id);
-        return task;
-    }
 
-
-    @GetMapping("/taskUpdateStatus/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public Task updateTaskStatus(@PathVariable long id) {
-        Task task = taskServiceImpl.getTask(id);
-        if (task.getTaskStatus().equals("new")){
-            task.setTaskStatus("progress");
-        } else if (task.getTaskStatus().equals("progress")){
-            task.setTaskStatus("done");
-        }
-        task.setTaskDateOfStatusChange(LocalDateTime.now());
-        taskServiceImpl.updateTask(task);
-        return task;
-    }
-
-    @DeleteMapping("/tasks/{id}")
-    @PreAuthorize("hasRole('USER')")
-    public String deleteTask(@PathVariable long id) {
-        return taskServiceImpl.deleteTask(id);
-    }
-
-    @DeleteMapping("/tasksAdmin/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String deleteTaskAdmin(@PathVariable long id) {
-        return taskServiceImpl.deleteTaskAdmin(id);
-    }
-    @PutMapping("/tasks")
-    @PreAuthorize("hasRole('ADMIN')")
-    public Task editTask(@RequestBody Task task) {
-        taskServiceImpl.updateTask(task);
-        return task;
-    }
-
-    @GetMapping("/getAllTasks")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public Iterable<Task> getAllTask() {
-        return taskServiceImpl.getAllTasks();
-    }
 }
